@@ -18,7 +18,7 @@ cd llama-2-7b
 ```
 Verify the integrity of the data transferred
 ```
-md5sum -c checklist.cs
+md5sum -c checklist.chk
 ```
 
 Now we have a model
