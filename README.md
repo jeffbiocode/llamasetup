@@ -20,6 +20,11 @@ Verify the integrity of the data transferred
 ```
 md5sum -c checklist.chk
 ```
+when the checksum is finished you should see something like this where each file is listed and says OK next to it
+"
+consolidated.00.pth: OK
+params.json: OK
+"
 
 Now we have a model
 
