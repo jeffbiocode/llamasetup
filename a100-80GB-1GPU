@@ -1,0 +1,18 @@
+gcloud compute instances create llama2setup \
+    --project=optimum-entity-397317 \
+    --zone=us-central1-a \
+    --machine-type=a2-ultragpu-1g \
+    --network-interface=network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=default \
+    --no-restart-on-failure \
+    --maintenance-policy=TERMINATE \
+    --provisioning-model=SPOT \
+    --instance-termination-action=STOP \
+    --service-account=1042886631329-compute@developer.gserviceaccount.com \
+    --scopes=https://www.googleapis.com/auth/cloud-platform \
+    --accelerator=count=1,type=nvidia-a100-80gb \
+    --create-disk=auto-delete=yes,boot=yes,device-name=llama2setup,image=projects/ml-images/global/images/c0-deeplearning-common-gpu-v20230822-debian-11-py310,mode=rw,size=1024,type=projects/optimum-entity-397317/zones/us-central1-a/diskTypes/pd-balanced \
+    --no-shielded-secure-boot \
+    --shielded-vtpm \
+    --shielded-integrity-monitoring \
+    --labels=goog-ec-src=vm_add-gcloud \
+    --reservation-affinity=any
