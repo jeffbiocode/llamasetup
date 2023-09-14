@@ -1,39 +1,6 @@
 # For GCP
 
-First we need to create a gpu instance 
-For this example we will use a L4 spot instance which is fairly cheap
-
-
-Login to the instance 
-
-Replace the model with the one you want to use available models are listed below
-
-llama-2-7b
-llama-2-13b
-llama-2-70b
-llama-2-7b-chat
-llama-2-13b-chat
-llama-2-70b-chat
-
-Copy the model from our GCS 
-```
-gsutil -m cp -r gs://llama-pajama/llama-2-7b .
-```
-Change directory to the model directoy
-```
-cd llama-2-7b
-```
-Verify the integrity of the data transferred
-```
-md5sum -c checklist.chk
-```
-when the checksum is finished you should see something like this where each file is listed and says OK next to it
-```
-consolidated.00.pth: OK
-params.json: OK
-```
-
-Now we have a model
+Create the instance using gcloud
 
 ```
 gcloud beta compute instances create llama13ba100-40gb \
@@ -58,3 +25,63 @@ AAAAB3NzaC1yc2EAAAADAQABAAACAQDN710Bj6S3cSx8AtmmYr\+EieAu4XwNTViw3wMjzhLfATZpxkb
     --labels=goog-ec-src=vm_add-gcloud \
     --reservation-affinity=any
 ```
+
+open and agree to installing nvidia drivers (see if we can automate this part)
+
+ssh into the server and
+```
+git clone https://github.com/facebookresearch/llama.git
+```
+```
+cd llama
+```
+
+Replace the model with the one you want to use available models are listed below
+
+llama-2-7b
+llama-2-13b
+llama-2-70b
+llama-2-7b-chat
+llama-2-13b-chat
+llama-2-70b-chat
+
+Copy the tokenizer
+```
+gsutil -m cp -r gs://llama-pajama/tokenizer.model .
+```
+Copy the model from our GCS 
+```
+gsutil -m cp -r gs://llama-pajama/llama-2-7b .
+```
+Change directory to the model directoy
+```
+cd llama-2-7b
+```
+Verify the integrity of the data transferred
+```
+md5sum -c checklist.chk
+```
+when the checksum is finished you should see something like this where each file is listed and says OK next to it
+```
+consolidated.00.pth: OK
+params.json: OK
+```
+```
+cd ..
+```
+Install dependencies 
+```
+pip install -e .
+```
+Run the example
+```
+torchrun --nproc_per_node 1 example_chat_completion.py \
+    --ckpt_dir llama-2-7b-chat/ \
+    --tokenizer_path tokenizer.model \
+    --max_seq_len 512 --max_batch_size 6
+```
+
+Now we have a model
+
+Time to try it out!
+
