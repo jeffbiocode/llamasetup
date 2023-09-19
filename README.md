@@ -30,7 +30,7 @@ open and agree to installing nvidia drivers (see if we can automate this part)
 
 ssh into the server and
 ```
-git clone https://github.com/facebookresearch/llama.git
+git clone https://github.com/jeffbiocode/llama.git
 ```
 ```
 cd llama
@@ -51,11 +51,11 @@ gsutil -m cp -r gs://llama-pajama/tokenizer.model .
 ```
 Copy the model from our GCS 
 ```
-gsutil -m cp -r gs://llama-pajama/llama-2-7b .
+gsutil -m cp -r gs://llama-pajama/llama-2-7b-chat .
 ```
 Change directory to the model directoy
 ```
-cd llama-2-7b
+cd llama-2-7b-chat
 ```
 Verify the integrity of the data transferred
 ```
@@ -80,8 +80,4 @@ torchrun --nproc_per_node 1 example_chat_completion.py \
     --tokenizer_path tokenizer.model \
     --max_seq_len 512 --max_batch_size 6
 ```
-
-Now we have a model
-
-Time to try it out!
 

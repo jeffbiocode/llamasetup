@@ -1,0 +1,18 @@
+gcloud compute instances create instance-1 \
+    --project=optimum-entity-397317 \
+    --zone=us-central1-a \
+    --machine-type=g2-standard-12 \
+    --network-interface=address=34.132.87.213,network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=default \
+    --no-restart-on-failure \
+    --maintenance-policy=TERMINATE \
+    --provisioning-model=SPOT \
+    --instance-termination-action=DELETE \
+    --service-account=1042886631329-compute@developer.gserviceaccount.com \
+    --scopes=https://www.googleapis.com/auth/cloud-platform \
+    --accelerator=count=1,type=nvidia-l4 \
+    --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ml-images/global/images/c2-deeplearning-pytorch-2-0-gpu-v20230822-debian-11-py310,mode=rw,size=400,type=projects/optimum-entity-397317/zones/us-central1-a/diskTypes/pd-ssd \
+    --no-shielded-secure-boot \
+    --shielded-vtpm \
+    --shielded-integrity-monitoring \
+    --labels=goog-ec-src=vm_add-gcloud \
+    --reservation-affinity=any
